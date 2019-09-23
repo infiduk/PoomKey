@@ -4,22 +4,26 @@ const db = require('./connect');
 class User {
     //회원가입
     register(user) {
+        console.log(user)
         return new Promise(async (resolve, reject) => {
-           let sql = 'INSERT INTO user SET ?';
+           let sql = 'INSERT INTO USER SET ?';
            try {
                let result = await db.query(sql, user);
+               console.log("register",result)
                resolve(result);
            } catch(err) {
+               console.err(err);
                reject(err);
            }
         });
     }
-    // 로그인
+    // 로그인           
     login(user) {
         return new Promise(async (resolve, reject) => {
-            let sql = 'SELECT * FROM user WHERE ?';
+            let sql = 'SELECT * FROM USER WHERE id = ? and pw = ?';
             try {
-                let result = await db.query(sql, user);
+                let result = await db.query(sql, [user.id, user.pw]);
+                console.log("login",result)
                 resolve(result);
             } catch(err) {
                 reject(err);

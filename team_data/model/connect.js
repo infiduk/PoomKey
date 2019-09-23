@@ -1,6 +1,6 @@
 const mysql = require('mysql2/promise');
 const config = {
-    host : '127.0.0.1',
+    host : '192.168.0.3',
     user : 'poomkeyadmin',
     password : '1q2w3e4r!2',
     database : 'poomkey_poomkey',

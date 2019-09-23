@@ -8,7 +8,7 @@ const keyRouter = express.Router();
 const { FileSystemWallet, Gateway } = require('fabric-network');
 const fs = require('fs');
 const path = require('path');
-const ccpPath = path.resolve(__dirname, '..', 'network' ,'connection.json');
+const ccpPath = path.resolve(__dirname, '..', '..', 'network' ,'connection.json');
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
 const ccp = JSON.parse(ccpJSON);
 
@@ -21,6 +21,14 @@ keyRouter.post('/key', async (req, res) => {
         var validity = req.body.validity;
 
         // Key 등록 들어갈 자리 (DB)
+        let keyData = {
+            name: name,
+            owner: owner,
+            validity: validity
+        }
+
+        let index = await keyModel.register(keyData);
+        index = index[0]['insertId'];
 
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), 'wallet');
