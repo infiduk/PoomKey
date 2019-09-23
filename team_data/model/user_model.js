@@ -9,10 +9,8 @@ class User {
            let sql = 'INSERT INTO USER SET ?';
            try {
                let result = await db.query(sql, user);
-               console.log("register",result)
                resolve(result);
            } catch(err) {
-               console.err(err);
                reject(err);
            }
         });
@@ -23,7 +21,6 @@ class User {
             let sql = 'SELECT * FROM USER WHERE id = ? and pw = ?';
             try {
                 let result = await db.query(sql, [user.id, user.pw]);
-                console.log("login",result)
                 resolve(result);
             } catch(err) {
                 reject(err);

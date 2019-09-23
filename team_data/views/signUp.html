@@ -19,6 +19,7 @@
             $('#submit').click(function(){
                 var id_value = $('#id').val()
                 var pw_value = $('#pw').val()
+                alert('1')
                 $.ajax({
                     url:"http://localhost:3000/user",
                     method:"POST",
@@ -31,12 +32,18 @@
                         id : id_value,
                         pw : pw_value
                     },
-                    succsess : function(data){
-                        console.log(data)
+                    error : function(error) {
+                        alert("Error!");
+                    },
+                    success : function(data) {
+                        alert("success!");
+                    },
+                    complete : function() {
+                        alert("complete!");    
                     }
-                })
-            })
-        })
+                });
+            });
+        });
     </script>
     <title>Poomkey App</title>
 </head>
