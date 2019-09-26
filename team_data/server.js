@@ -7,11 +7,11 @@ const cors = require('cors');
 // Template Engine
 app.set('view engine', 'ejs');
 // Template File Location
-app.set('/', __dirname + '/views');
+// app.set(__dirname + '/views');
 
 // Middleware
 app.use(express.static(__dirname + '/public'));
-app.use(express.static('views'));
+app.use(express.static(__dirname + '/views'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : true}));
 
@@ -20,10 +20,10 @@ const router = require('./router/router');
 app.use(router);
 
 app.get('/', (req, res) => {
-    res.render('/index.html');
+    res.render('index');
 });
 
 // Server initialize
-app.listen(3000, function() {
+app.listen(8080, function() {
     console.log("Run server");
 });
