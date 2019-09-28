@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const userRouter = require('./user_router');
-const keyRouter = require('./key_router');
+const userRouter = require('./user');
+const keyRouter = require('./key');
 router.use(userRouter);
 router.use(keyRouter);
 
