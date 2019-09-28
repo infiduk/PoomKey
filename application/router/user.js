@@ -2,7 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const userRouter = express.Router();
-const userModel = require('../model/user_model');
+const userModel = require('../model/user');
 
 userRouter.use(session({
     secret: 'keyboard cat',
@@ -11,24 +11,11 @@ userRouter.use(session({
     store: new FileStore()
 }));
 
-userRouter.post('/user', async (req, res) => {
-    const user = {
-        id: req.body.id,
-        pw: req.body.pw
-    };
-    console.log(user);
-    try {
-        await userModel.register(user);
-        let data = { result: true, msg: user.id + "님 환영합니다. 회원가입이 완료되었습니다." }
-        console.log(data);
-        res.status(200).send(data); 
-    } catch(err) {
-        res.status(500).send(err);
-    }
-});
+userRouter.get('/user/login', (req, res) => {
+    res.render('login');
+ });
 
-
-userRouter.post('/login', async (req, res) => {
+userRouter.post('/user/login', async (req, res) => {
     const user = {
         id: req.body.id,
         pw: req.body.pw
@@ -46,9 +33,29 @@ userRouter.post('/login', async (req, res) => {
             data = { msg: "로그인 정보가 일치하지 않습니다." }
         }
         console.log(data);
-        res.status(200).send(data)
+        res.render('index', { data: data });
     } catch(err) {
         res.status(500).send(err);
     }
 });
+
+userRouter.get('/user/signup', (req, res) => {
+    res.render('signup'); 
+ });
+
+userRouter.post('/user/signup', async (req, res) => {
+    const user = {
+        id: req.body.id,
+        pw: req.body.pw
+    };
+    console.log(user);
+    try {
+        await userModel.register(user);
+        let data = { result: true, msg: user.id + "님 환영합니다. 회원가입이 완료되었습니다." }
+        res.render('login', { data: data });
+    } catch(err) {
+        res.status(500).send(err);
+    }
+});
+
 module.exports = userRouter;

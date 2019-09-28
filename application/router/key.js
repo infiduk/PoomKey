@@ -1,4 +1,4 @@
-const keyModel = require('../model/key_model');
+const keyModel = require('../model/key');
 
 // ExpressJS Setup
 const express = require('express');
@@ -11,6 +11,10 @@ const path = require('path');
 const ccpPath = path.resolve(__dirname, '..', '..', 'network' ,'connection.json');
 const ccpJSON = fs.readFileSync(ccpPath, 'utf8');
 const ccp = JSON.parse(ccpJSON);
+
+keyRouter.get('/key', (req, res)=>{
+    res.render('registerKey');
+});
 
 // 새로운 키 등록
 keyRouter.post('/key', async (req, res) => {
@@ -62,7 +66,8 @@ keyRouter.post('/key', async (req, res) => {
     /* ------------------- CHAINCODE ACCESS ------------------ */
     
     /* ----------------------- RESPONSE ---------------------- */
-        res.status(200).json({response: 'Transaction has been submitted'});
+        // res.status(200).json({response: 'Transaction has been submitted'});
+        res.render('index')
     } catch (error) {
         console.error(`Failed to submit transaction: ${error}`);
         res.status(400).json(error);
@@ -109,15 +114,19 @@ keyRouter.get('/keys', async (req, res) => {
             });
         }
         console.log(obj)
-        res.status(200).json(obj);
+        res.render('queryAllKey', { data: obj });
     } catch(error) {
         console.error(`Failed: ${error}`);
         res.status(400).json(error);
     }
 });
 
+keyRouter.get('/keys/owner', (req, res) => {
+    res.render('queryKey');
+});
+
 // Owner로 키 조회
-keyRouter.post('/keys', async (req, res) => {
+keyRouter.post('/keys/owner', async (req, res) => {
     try {
         var owner = req.body.owner;
         console.log(owner);
@@ -157,10 +166,9 @@ keyRouter.post('/keys', async (req, res) => {
                 // 13, 21, 25, 44
             });
         }
-        console.log("ddddd", obj);
     /* ------------------- CHAINCODE ACCESS ------------------ */
         res.status(200).json(obj);
-
+        // res.render('queryKey', { data: obj });
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
         res.status(400).json(`{response: ${error}`);

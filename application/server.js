@@ -7,6 +7,7 @@ const cors = require('cors');
 // Template Engine
 app.set('view engine', 'ejs');
 // Template File Location
+// app.set(__dirname + '/views');
 
 // Middleware
 app.use(express.static(__dirname + '/public'));

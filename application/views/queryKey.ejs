@@ -19,7 +19,7 @@
             $(document).ready(function(){
                 $('#submit').click(function(){
                     $.ajax({
-                        url:"http://ch-4ml.iptime.org:8080/keys",
+                        url:"http://ch-4ml.iptime.org:8080/keys/owner",
                         method:"POST",
                         async: true,
                         contentType: "application/x-www-form-urlencoded",
@@ -61,7 +61,7 @@
 </head>
 
 <body align="center">
-    <h2 onclick="location.href='./index.html'">Welcome To PoomkeyPoomkey!</h2>
+    <a href="/"><h2>Welcome To PoomkeyPoomkey!</h2></a>
     <div>
         <h2>제품 키 조회</h2>
         <table id="tableData"></table>
@@ -69,7 +69,9 @@
     <div class="form-group">
         <input type="text" class="form-control" id="owner" placeholder="소유자 명을 입력하세요.">
     </div>
-    <button type="submit" id="submit" class="btn btn-primary">확인</button>
+    <div class="form-group">
+        <button type="submit" id="submit" class="btn btn-primary">확인</button>
+    </div>
 </body>
 
 </html>
